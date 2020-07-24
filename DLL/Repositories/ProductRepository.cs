@@ -1,5 +1,5 @@
 ﻿using DLL.Context;
-using DLL.Entities;
+using Common.Entitites;
 using DLL.Interfaces;
 using System;
 using System.Collections.Generic;

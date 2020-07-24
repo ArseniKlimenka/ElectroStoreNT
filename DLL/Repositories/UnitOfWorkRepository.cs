@@ -5,20 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLL.Context;
-using DLL.Entities;
-
+using Common.Entitites;
+using DLL.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace DLL.Repositories
 {
-    class UnitOfWorkRepository : IUnitOfWork
+    public class UnitOfWorkRepository : IUnitOfWork
     {
         private EFdbContext db;
         private ProductRepository productRepository;
-       
+        private ApplicationUserManager userManager;
+        private ApplicationRoleManager roleManager;
+        private IClientManager clientManager;
 
         public UnitOfWorkRepository(string connectionString)
         {
             db = new EFdbContext(connectionString);
+            userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(db));
+            roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
+            clientManager = new ClientManager(db);
         }
         public IRepository<Product> Products
         {
@@ -29,12 +35,29 @@ namespace DLL.Repositories
                 return productRepository;
             }
         }
-      
 
-        public void Save()
+        public ApplicationUserManager UserManager
         {
-            db.SaveChanges();
+            get { return userManager; }
         }
+
+        public IClientManager ClientManager
+        {
+            get { return clientManager; }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get { return roleManager; }
+        }
+        public async Task SaveAsync()
+        {
+            await db.SaveChangesAsync();
+        }
+        //public void Save()
+        //{
+        //    db.SaveChanges();
+        //}
 
         private bool disposed = false;
 

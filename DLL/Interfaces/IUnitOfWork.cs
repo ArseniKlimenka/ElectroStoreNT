@@ -1,4 +1,5 @@
-﻿using DLL.Entities;
+﻿using Common.Entitites;
+using DLL.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,10 @@ namespace DLL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Product> Products { get; }
-       
-        void Save();
+        ApplicationUserManager UserManager { get; }
+        IClientManager ClientManager { get; }
+        ApplicationRoleManager RoleManager { get; }
+        Task SaveAsync();
+        //void Save();
     }
 }
