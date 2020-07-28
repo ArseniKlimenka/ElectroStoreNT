@@ -10,6 +10,10 @@
 <body>
     <div class="navbar navbar-inverse" role="navigation">
         <a class="navbar-brand" href="#">Moo-V - магазин фильмов</a>
+        <div class="navbar-brand pull-right">
+            <div>  @Html.ActionLink("Регистрация", "Register", "Account") </div>
+            @Html.ActionLink("Войти", "Login", "Account")
+        </div>
     </div>
     <div class="row panel">
         <div id="categories" class="col-xs-3">
