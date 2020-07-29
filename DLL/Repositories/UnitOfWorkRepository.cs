@@ -16,6 +16,7 @@ namespace DLL.Repositories
         private EFdbContext db;
         private ProductRepository productRepository;
         private ApplicationUserManager userManager;
+        private ICartRepository _cartRepository;
         private ApplicationRoleManager roleManager;
         private IClientManager clientManager;
 
@@ -50,14 +51,25 @@ namespace DLL.Repositories
         {
             get { return roleManager; }
         }
+
+        public ICartRepository Carts
+        {
+            get
+            {
+                if (_cartRepository == null)
+                    _cartRepository = new CartRepository(db);
+                return _cartRepository;
+            }
+        }
+
         public async Task SaveAsync()
         {
             await db.SaveChangesAsync();
         }
-        //public void Save()
-        //{
-        //    db.SaveChanges();
-        //}
+        public void Save()
+        {
+            db.SaveChanges();
+        }
 
         private bool disposed = false;
 

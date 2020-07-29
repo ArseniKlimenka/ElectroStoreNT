@@ -11,10 +11,11 @@ namespace DLL.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IRepository<Product> Products { get; }
+        ICartRepository Carts { get; }
         ApplicationUserManager UserManager { get; }
         IClientManager ClientManager { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();
-        //void Save();
+        void Save();
     }
 }
