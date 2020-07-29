@@ -59,7 +59,7 @@
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Entitites\ApplicationRole.cs" />
     <Compile Include="Entitites\ApplicationUser.cs" />
-    <Compile Include="Entitites\CartLine.cs" />
+    <Compile Include="Entitites\CartItem.cs" />
     <Compile Include="Entitites\ClientProfile.cs" />
     <Compile Include="Entitites\Order.cs" />
     <Compile Include="Entitites\OrderDetail.cs" />
