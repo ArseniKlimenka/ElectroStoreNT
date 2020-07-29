@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.ModelBinding;
 
 namespace ElectroStireNT.Util
 {
@@ -12,7 +13,9 @@ namespace ElectroStireNT.Util
     {
         public override void Load()
         {
+            Bind<IOrderService>().To<OrderService>();
             Bind<IProductService>().To<ProductService>();
+            Kernel.Unbind<ModelValidatorProvider>();
         }
     }
 }

@@ -1,0 +1,16 @@
+﻿@{ ViewBag.Title = "Корзина покупок";
+                Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+<h2>Ваша корзина</h2>
+
+<div id="updateCart">
+    @Html.Partial("ShowCart")
+</div>
+<a class="btn btn-primary btn-sm" href="@Model.returnUrl">Продолжить покупки</a>
+@Ajax.ActionLink("Очистить корзину", "EmptyCart", "Cart", null, new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "updateCart",
+    Confirm = "Вы хотите полностью очистить корзину?"
+}, new { @class = "btn btn-primary btn-sm" })
+@Html.ActionLink("Оформить заказ", "MakeOrder", "Checkout", null, new { @class = "btn btn-primary btn-sm" })

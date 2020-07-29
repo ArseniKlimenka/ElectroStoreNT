@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BLL.Interfaces;
 using Common.DTO;
 using Common.Entitites;
 using DLL.Interfaces;

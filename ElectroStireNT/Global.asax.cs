@@ -19,11 +19,15 @@ namespace ElectroStireNT
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-
-            NinjectModule productModule = new ProductModule();
-            NinjectModule serviceModule = new ServiceModule("EFdbContext");
-            var kernel = new StandardKernel(productModule, serviceModule);
+            ServiceModule serviceModule = new ServiceModule("EFdbContext");
+            ProductModule orderModule = new ProductModule();
+            var kernel = new StandardKernel(serviceModule, orderModule);
             DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+
+            //NinjectModule productModule = new ProductModule();
+            //NinjectModule serviceModule = new ServiceModule("EFdbContext");
+            //var kernel = new StandardKernel(productModule, serviceModule);
+            //DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
         }
     }
 }

@@ -1,14 +1,16 @@
 ﻿@using ElectroStireNT.Models
 @using ElectroStireNT.HtmlHelpers
-@model ListViewModel 
+@model ListViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-     
-            @foreach (var p in Model.Prods)
-            {
+    <div id="updateProducts">
+        @Html.Partial("ProductSummary")
+    </div>
+@foreach (var p in Model.Prods)
+{
     <div class="well">
         <h3>
             <strong>@p.Name</strong>
@@ -16,8 +18,8 @@
         </h3>
         <span class="lead">@p.Description</span>
     </div>
-            }
-<div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index",
-        new { page = x, category = Model.CurrentCategory }))
-</div>
+}   
+    <div class="btn-group pull-right">
+        @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index",
+            new { page = x, category = Model.CurrentCategory }))
+    </div>

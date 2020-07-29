@@ -14,6 +14,9 @@
             <div>  @Html.ActionLink("Регистрация", "Register", "Account") </div>
             @Html.ActionLink("Войти", "Login", "Account")
         </div>
+        <a class="btn btn-outline-light mx-1" href="@Url.Action("Index","Cart",  new { returnUrl = Request.Url.PathAndQuery })">
+            <i class="fas fa-shopping-cart mr-1"></i>Корзина
+        </a>
     </div>
     <div class="row panel">
         <div id="categories" class="col-xs-3">

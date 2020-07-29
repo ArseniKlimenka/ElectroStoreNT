@@ -5,6 +5,7 @@ using ElectroStireNT.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,13 +13,17 @@ namespace ElectroStireNT.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly ShoppingCartFactory shoppingCartFactory;
         IProductService productService;
-        public HomeController(IProductService serv)
+        IOrderService orderService;
+        public HomeController(IProductService serv, IOrderService oService, ShoppingCartFactory factory)
         {
-           productService = serv;
+            orderService = oService;
+            shoppingCartFactory = factory;
+            productService = serv;
         }
         
-        public ActionResult Index(string category, int page = 1)
+        public ActionResult Index(int? id,string category, int page = 1 )
         {
             int pageSize = 4;
             IEnumerable<ProductDTO> productDtos = productService.GetProducts() ;
@@ -39,9 +44,33 @@ namespace ElectroStireNT.Controllers
                 },
                 CurrentCategory = category
             };
+            if (Request.IsAjaxRequest())
+            {
+                var cart = shoppingCartFactory.GetCart(HttpContext);
+                var addedBook = productService.GetProduct(id.Value);
+                orderService.AddToCart(addedBook, cart.ShoppingCartId);
 
+
+                return PartialView("ProductSummary", model);
+            }
             return View(model);
         }
+
+        public async Task<ActionResult> AddToCart(int? id, int? page, string category, string author)
+        {
+            var cart = shoppingCartFactory.GetCart(HttpContext);
+            var addedBook = productService.GetProduct(id.Value);
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+
+            await orderService.AddToCart(addedBook, cart.ShoppingCartId);
+
+            var books = productService.GetProducts();
+
+            return PartialView("ProductSummary", books);
+        }
+
+
         protected override void Dispose(bool disposing)
         {
            productService.Dispose();

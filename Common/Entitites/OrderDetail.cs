@@ -17,4 +17,4 @@ namespace Common.Entitites
         public virtual Order Order { get; set; }
     }
 }
-}
+
