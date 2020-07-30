@@ -51,6 +51,7 @@ namespace BLL.Services
 
             return mapper.Map<IEnumerable<CartItem>, List<CartItemDTO>>(await Database.Carts.GetAll(Id));
         }
+      
 
         public void RemoveFromCart(int id, string CartId)
         {

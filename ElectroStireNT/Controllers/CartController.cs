@@ -1,4 +1,6 @@
-﻿using BLL.Interfaces;
+﻿using AutoMapper;
+using BLL.Interfaces;
+using Common.DTO;
 using ElectroStireNT.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace ElectroStireNT.Controllers
 {
@@ -20,6 +23,8 @@ namespace ElectroStireNT.Controllers
         }
         public async Task<ActionResult> Index(string returnUrl, Controller controller)
         {
+            
+           
 
             var cartId = shoppingCartFactory.GetCart(HttpContext);
             ShoppingCartViewModel viewModel = new ShoppingCartViewModel
@@ -27,7 +32,8 @@ namespace ElectroStireNT.Controllers
                 CartItems = await orderService.GetAllCartItems(cartId.ShoppingCartId),
                 returnUrl = returnUrl,
                 CartTotal = await orderService.GetTotal(cartId.ShoppingCartId)
-            };
+            };           
+       
             return View(viewModel);
         }
 

@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 
 namespace DLL.Context
 {
-    public class EfDbInitializer : DropCreateDatabaseIfModelChanges<EFdbContext>
+    public class EfDbInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<EFdbContext> //DropCreateDatabaseIfModelChanges<EFdbContext>
     {
         protected override void Seed(EFdbContext context)
         {
-            context.Products.Add(new Product { ProductId = 1, Name = "Qas", Description = "Hui", Category = "Драма", Price = 233 });
-            context.Products.Add(new Product { ProductId = 2, Name = "Qas", Description = "Hui", Category = "Боевик", Price = 27 });
-            context.Products.Add(new Product { ProductId = 3, Name = "Qas", Description = "Hui", Category = "Фэнтези", Price = 233 });
-            context.Products.Add(new Product { ProductId = 4, Name = "Qas", Description = "Hui", Category = "Смех", Price = 73 });
-            context.Products.Add(new Product { ProductId = 5, Name = "Qas", Description = "Hui", Category = "Драма", Price = 12 });
+            context.Products.Add(new Product { ProductId = 17, Name = "Qas", Description = "Hui", Category = "Драма", Price = 233 });
+            context.Products.Add(new Product { ProductId = 18, Name = "Qas", Description = "Hui", Category = "Боевик", Price = 27 });
+            context.Products.Add(new Product { ProductId = 19, Name = "Qas", Description = "Hui", Category = "Фэнтези", Price = 233 });
+            context.Products.Add(new Product { ProductId = 20, Name = "Qas", Description = "Hui", Category = "Смех", Price = 73 });
+            context.Products.Add(new Product { ProductId = 21, Name = "Qas", Description = "Hui", Category = "Драма", Price = 12 });
+
+         context.CartItems.Add(new CartItem { CartId = "1", CartItemId = 1, Count = 1, Product = new Product { Name = "Qas" }, ProductId = 1 });
+            context.SaveChanges();
         }
     }
 }

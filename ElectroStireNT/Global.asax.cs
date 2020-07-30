@@ -5,6 +5,7 @@ using Ninject.Modules;
 using Ninject.Web.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +20,8 @@ namespace ElectroStireNT
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+         
+
             ServiceModule serviceModule = new ServiceModule("EFdbContext");
             ProductModule orderModule = new ProductModule();
             var kernel = new StandardKernel(serviceModule, orderModule);
@@ -28,6 +31,8 @@ namespace ElectroStireNT
             //NinjectModule serviceModule = new ServiceModule("EFdbContext");
             //var kernel = new StandardKernel(productModule, serviceModule);
             //DependencyResolver.SetResolver(new NinjectDependencyResolver(kernel));
+
+
         }
     }
 }

@@ -4,7 +4,42 @@
 <h2>Ваша корзина</h2>
 
 <div id="updateCart">
-    @Html.Partial("ShowCart")
+    table class="table">
+    <thead>
+        <tr>
+            <th>Кол-во</th>
+            <th>Фильм</th>
+            <th>Цена</th>
+            <th>Общая цена</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var line in Model.CartItems)
+        {
+<tr>
+    <td>@line.Count</td>
+    <td>@line.Product.Name</td>
+    <td>@line.Product.Price.ToString("# руб")</td>
+    <td>@((line.Product.Price * line.Count).ToString("# руб"))</td>
+    <td>
+        @Ajax.ActionLink("Удалить", "RemoveFromCart", "ShoppingCart",
+                      new { id = line.CartItemId, returnUrl = Model.returnUrl }, new AjaxOptions
+                      {
+                          HttpMethod = "GET",
+                          UpdateTargetId = "updateCart"
+                      }, new { @class = "btn btn-primary" })
+    </td>
+</tr>}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Итоге:</td>
+            <td>
+                @Model.CartTotal.ToString("# руб")
+            </td>
+        </tr>
+    </tfoot>
+    </table>
 </div>
 <a class="btn btn-primary btn-sm" href="@Model.returnUrl">Продолжить покупки</a>
 @Ajax.ActionLink("Очистить корзину", "EmptyCart", "Cart", null, new AjaxOptions

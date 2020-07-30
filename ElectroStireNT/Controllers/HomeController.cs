@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
+using PagedList;
+
 namespace ElectroStireNT.Controllers
 {
     public class HomeController : Controller
@@ -51,23 +53,42 @@ namespace ElectroStireNT.Controllers
                 orderService.AddToCart(addedBook, cart.ShoppingCartId);
 
 
-                return PartialView("ProductSummary", model);
+                return View(model);
             }
             return View(model);
         }
 
-        public async Task<ActionResult> AddToCart(int? id, int? page, string category, string author)
+        public async Task<ActionResult> AddToCart(int? id, string category, int page=1)
         {
+           
             var cart = shoppingCartFactory.GetCart(HttpContext);
-            var addedBook = productService.GetProduct(id.Value);
+            var addedProd = productService.GetProduct(id.Value);
             int pageSize = 6;
-            int pageNumber = (page ?? 1);
+           // int pageNumber = (page ?? 1);            
+            await orderService.AddToCart(addedProd, cart.ShoppingCartId);
 
-            await orderService.AddToCart(addedBook, cart.ShoppingCartId);
 
-            var books = productService.GetProducts();
+            IEnumerable<ProductDTO> productDtos = productService.GetProducts();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
+            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
+            ListViewModel model = new ListViewModel
+            {
+                Prods = products.Where(p => category == null || p.Category == category)
+                    .OrderBy(product => product.ProductId).Skip((page - 1) * pageSize)
+                    .Take(pageSize),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = pageSize,
+                    TotalItems = category == null ?
+        products.Count() :
+       products.Where(p => p.Category == category).Count()
+                },
+                CurrentCategory = category
+            };
 
-            return PartialView("ProductSummary", books);
+
+            return View("Index",model);
         }
 
 

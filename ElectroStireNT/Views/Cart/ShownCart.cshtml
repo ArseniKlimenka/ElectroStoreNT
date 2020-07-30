@@ -18,13 +18,14 @@
     <td>@((line.Product.Price * line.Count).ToString("# руб"))</td>
     <td>
         @Ajax.ActionLink("Удалить", "RemoveFromCart", "ShoppingCart",
-            new { id = line.CartItemId, returnUrl = Model.returnUrl }, new AjaxOptions
-            {
-                HttpMethod = "GET",
-                UpdateTargetId = "updateCart"
-            }, new { @class = "btn btn-primary" })
+                 new { id = line.CartItemId, returnUrl = Model.returnUrl }, new AjaxOptions
+                 {
+                     HttpMethod = "GET",
+                     UpdateTargetId = "updateCart"
+                 }, new { @class = "btn btn-primary" })
     </td>
-</tr>}
+</tr>
+}
     </tbody>
     <tfoot>
         <tr>
@@ -35,3 +36,4 @@
         </tr>
     </tfoot>
 </table>
+

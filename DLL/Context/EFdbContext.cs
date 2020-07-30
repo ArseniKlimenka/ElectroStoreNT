@@ -17,8 +17,13 @@ namespace DLL.Context
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<ClientProfile> ClientProfiles { get; set; }
         public EFdbContext(string connectionString) : base(connectionString)
-        {
+        {           
         }
+       
+
+
+
+
     }
 }
 
