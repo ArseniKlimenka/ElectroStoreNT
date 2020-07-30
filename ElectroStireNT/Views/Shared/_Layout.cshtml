@@ -1,23 +1,45 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
+<head>    
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <title>@ViewBag.Title</title>
 </head>
 <body>
-    <div class="navbar navbar-inverse" role="navigation">
-        <a class="navbar-brand" href="#">Moo-V - магазин фильмов</a>
-        <div class="navbar-brand pull-right">
-            <div>  @Html.ActionLink("Регистрация", "Register", "Account") </div>
-            @Html.ActionLink("Войти", "Login", "Account")
+    <nav class="navbar navbar-dark bg-primary navbar-expand-lg sticky-top">
+        <a href="#" class="navbar-brand">Moo-V</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            </ul>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
+            {
+    <input class="form-control mr-sm-2" placeholder="Книга" data-autocomplete-source='@Url.Action("Autocomplete", "Home")' name="searchName" />
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Поиск</button>            }
+            @if (!User.Identity.IsAuthenticated)
+            {
+    @Html.ActionLink("Войти", "Login", "Account", null, new { @class = "btn-outline-light btn ml-1" }) }
+                else
+                {
+    @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn-outline-light btn ml-1" })            }
+            @if (User.IsInRole("admin"))
+            {
+    @Html.ActionLink("Админ панель", "Main", "Product", null, new { @class = "btn btn-outline-light ml-1" })            }
+
+            <a class="btn btn-outline-light mx-1" href="@Url.Action("Index","Cart",  new { returnUrl = Request.Url.PathAndQuery })">
+                <i class="fas fa-shopping-cart mr-1"></i>Корзина
+            </a>
+
         </div>
-        <a class="btn btn-outline-light mx-1" href="@Url.Action("Index","Cart",  new { returnUrl = Request.Url.PathAndQuery })">
-            <i class="fas fa-shopping-cart mr-1"></i>Корзина
-        </a>
-    </div>
+    </nav>
     <div class="row panel">
         <div id="categories" class="col-xs-3">
             @Html.Action("Menu", "Nav")

@@ -102,9 +102,9 @@ namespace ElectroStireNT.Controllers
         {
             await UserService.SetInitialData(new UserDTO
             {
-                Email = "somemail@mail.ru",
+                Email = "admin",
                 UserName = "somemail@mail.ru",
-                Password = "ad46D_ewr3",
+                Password = "admin123",
                 Name = "Семен Семенович Горбунков",
                 Address = "ул. Спортивная, д.30, кв.75",
                 Role = "admin",
