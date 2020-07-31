@@ -1,0 +1,24 @@
+﻿@model PagedList.IPagedList<ElectroStireNT.Models.ProductViewModel>
+@using PagedList.Mvc;
+
+@foreach (var p in Model)
+{
+    <div class="well">
+        <h3>
+            <strong>@p.Name</strong>
+            <span class="pull-right label label-primary">@p.Price.ToString("# руб")</span>
+        </h3>
+
+        <div class="pull-right">
+            @Ajax.ActionLink("Добавить в корзину", "AddToCart", "Home", new
+       {
+           searchName = @ViewBag.searchName,
+           id = p.ProductId,
+          category = ViewBag.Category
+       },
+                new AjaxOptions { UpdateTargetId = "updateProducts", OnSuccess = "OnSuccess" }, new { @class = "btn btn-primary btn-sm" })
+        </div>
+
+        <span class="lead">@p.Description</span>
+    </div>
+}

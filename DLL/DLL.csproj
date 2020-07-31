@@ -63,16 +63,19 @@
     <Compile Include="Identity\ApplicationRoleManager.cs" />
     <Compile Include="Identity\ApplicationUserManager.cs" />
     <Compile Include="Interfaces\ICartRepository.cs" />
+    <Compile Include="Interfaces\ICategoryRepository.cs" />
     <Compile Include="Interfaces\IClientManager.cs" />
+    <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
-    <Compile Include="Migrations\202007301031301_MigrateDB.cs" />
-    <Compile Include="Migrations\202007301031301_MigrateDB.designer.cs">
-      <DependentUpon>202007301031301_MigrateDB.cs</DependentUpon>
+    <Compile Include="Migrations\202007310942412_NewProd.cs" />
+    <Compile Include="Migrations\202007310942412_NewProd.designer.cs">
+      <DependentUpon>202007310942412_NewProd.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\CartRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\ClientManager.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\UnitOfWorkRepository.cs" />
@@ -88,8 +91,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007301031301_MigrateDB.resx">
-      <DependentUpon>202007301031301_MigrateDB.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202007310942412_NewProd.resx">
+      <DependentUpon>202007310942412_NewProd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

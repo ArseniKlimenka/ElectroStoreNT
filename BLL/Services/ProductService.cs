@@ -26,17 +26,63 @@ namespace BLL.Services
 
         public ProductDTO GetProduct(int? id)
         {
-           
-            var product = Database.Products.Get(id.Value);
-            
-
-            return new ProductDTO { Category = product.Category, ProductId = product.ProductId, Name = product.Name, Price = product.Price };
+                      
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>().ForMember(dto => dto.Category,
+                src => src.MapFrom(b => b.Category.CategoryName)).ForMember(dto => dto.CategoryId,
+                src => src.MapFrom(b => b.Category.Id))).CreateMapper();
+            return mapper.Map<Product, ProductDTO>(Database.Products.Get(id.Value));
         }
 
+        public IEnumerable<ProductDTO> GetProducts(string category)
+        {
+            IEnumerable<Product> products;
+            if (category != null)
+            {
+                products = Database.Products.GetAll().Where(b => b.Category.CategoryName == category );
+
+            }
+            else
+            {
+               products =Database.Products.GetAll();
+
+            }
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>().ForMember(dto => dto.Category,
+                src => src.MapFrom(b => b.Category.CategoryName))).CreateMapper();
+            return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+        }
         public IEnumerable<ProductDTO> GetProducts()
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>().ForMember(dto => dto.Category,
+                src => src.MapFrom(b => b.Category.CategoryName))).CreateMapper();
             return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(Database.Products.GetAll());
+        }
+        public IEnumerable<ProductDTO> FindProducts(string searchName)
+        {
+            var products = Database.Products.Find(searchName);
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<Product, ProductDTO>()).CreateMapper();
+            return mapper.Map<IEnumerable<Product>, List<ProductDTO>>(products);
+        }
+
+        public void DeleteProduct(int id)
+        {
+            Database.Products.Delete(id);
+            Database.Save();
+        }
+
+        public void Update(ProductDTO productDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
+            var product = mapper.Map<ProductDTO, Product>(productDTO);
+            Database.Products.Update(product);
+            Database.Save();
+        }
+
+        public void CreateProduct(ProductDTO productDTO)
+        {
+            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
+            var product = mapper.Map<ProductDTO, Product>(productDTO);
+            Database.Products.Create(product);
+            Database.Save();
         }
     }
 }

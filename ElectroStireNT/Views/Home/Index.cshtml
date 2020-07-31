@@ -1,35 +1,15 @@
-﻿@using ElectroStireNT.Models
-@using ElectroStireNT.HtmlHelpers
-@model ListViewModel
+﻿@model PagedList.IPagedList<ElectroStireNT.Models.ProductViewModel>
+    @using PagedList.Mvc;
 
-
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-
-@foreach (var p in Model.Prods)
-{
-    <div class="well">
-        <h3>
-            <strong>@p.Name</strong>
-            <span class="pull-right label label-primary">@p.Price.ToString("# руб")</span>
-        </h3>
-
-        <div class="pull-right">
-            @Ajax.ActionLink("Добавить в корзину", "AddToCart", "Home", new
-       {
-           searchName = @ViewBag.searchName,
-           id = p.ProductId,
-          category = ViewBag.Category
-       },
-                new AjaxOptions { UpdateTargetId = "updateProducts", OnSuccess = "OnSuccess" }, new { @class = "btn btn-primary btn-sm" })
-        </div>
-
-        <span class="lead">@p.Description</span>
-    </div>
+   
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
     }
-<div class="btn-group pull-right">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("Index",
-        new { page = x, category = Model.CurrentCategory }))
-</div>
+
+    <div id="updateProducts">
+        @Html.Partial("Summary")
+    </div>
+   
+    <div class="float-right">
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = ViewBag.category }))
+    </div>

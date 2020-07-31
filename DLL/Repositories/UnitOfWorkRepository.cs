@@ -14,7 +14,8 @@ namespace DLL.Repositories
     public class UnitOfWorkRepository : IUnitOfWork
     {
         private EFdbContext db;
-        private ProductRepository productRepository;
+        private IProductRepository _productRepository;
+        private ICategoryRepository _categoryRepository;
         private ApplicationUserManager userManager;
         private ICartRepository _cartRepository;
         private ApplicationRoleManager roleManager;
@@ -27,13 +28,23 @@ namespace DLL.Repositories
             roleManager = new ApplicationRoleManager(new RoleStore<ApplicationRole>(db));
             clientManager = new ClientManager(db);
         }
-        public IRepository<Product> Products
+        public IProductRepository Products
         {
             get
             {
-                if (productRepository == null)
-                    productRepository = new ProductRepository(db);
-                return productRepository;
+                if (_productRepository == null)
+                    _productRepository = new ProductRepository(db);
+                return _productRepository;
+            }
+        }
+
+        public ICategoryRepository Categories
+        {
+            get
+            {
+                if (_categoryRepository == null)
+                    _categoryRepository = new CategoryRepository(db);
+                return _categoryRepository;
             }
         }
 

@@ -12,14 +12,19 @@ namespace DLL.Context
     {
         protected override void Seed(EFdbContext context)
         {
-            context.Products.Add(new Product { ProductId = 17, Name = "Qas", Description = "Hui", Category = "Драма", Price = 233 });
-            context.Products.Add(new Product { ProductId = 18, Name = "Qas", Description = "Hui", Category = "Боевик", Price = 27 });
-            context.Products.Add(new Product { ProductId = 19, Name = "Qas", Description = "Hui", Category = "Фэнтези", Price = 233 });
-            context.Products.Add(new Product { ProductId = 20, Name = "Qas", Description = "Hui", Category = "Смех", Price = 73 });
-            context.Products.Add(new Product { ProductId = 21, Name = "Qas", Description = "Hui", Category = "Драма", Price = 12 });
+            context.Products.Add(new Product { ProductId = 17, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 233 });
+            context.Products.Add(new Product { ProductId = 18, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 27 });
+            context.Products.Add(new Product { ProductId = 19, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 233 });
+            context.Products.Add(new Product { ProductId = 20, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 73 });
+            context.Products.Add(new Product { ProductId = 21, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 12 });
 
-         context.CartItems.Add(new CartItem { CartId = "1", CartItemId = 1, Count = 1, Product = new Product { Name = "Qas" }, ProductId = 1 });
-            context.SaveChanges();
+            context.Categories.Add(new Category { Id = 1, CategoryName = "Классика" });
+            context.Categories.Add(new Category { Id = 2, CategoryName = "Фентези" });
+            context.Categories.Add(new Category { Id = 3, CategoryName = "Ужасы" });
+            context.Categories.Add(new Category { Id = 4, CategoryName = "Драмма" });
+            context.Categories.Add(new Category { Id = 5, CategoryName = "Комедия" });
+            base.Seed(context);
+            
         }
     }
 }

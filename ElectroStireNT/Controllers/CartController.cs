@@ -24,7 +24,6 @@ namespace ElectroStireNT.Controllers
         public async Task<ActionResult> Index(string returnUrl, Controller controller)
         {
             
-           
 
             var cartId = shoppingCartFactory.GetCart(HttpContext);
             ShoppingCartViewModel viewModel = new ShoppingCartViewModel

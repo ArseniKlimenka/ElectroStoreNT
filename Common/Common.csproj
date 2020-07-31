@@ -55,12 +55,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\CartItemDTO.cs" />
+    <Compile Include="DTO\CategoryDTO.cs" />
     <Compile Include="DTO\OrderDTO.cs" />
     <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="Entitites\ApplicationRole.cs" />
     <Compile Include="Entitites\ApplicationUser.cs" />
     <Compile Include="Entitites\CartItem.cs" />
+    <Compile Include="Entitites\Category.cs" />
     <Compile Include="Entitites\ClientProfile.cs" />
     <Compile Include="Entitites\Order.cs" />
     <Compile Include="Entitites\OrderDetail.cs" />

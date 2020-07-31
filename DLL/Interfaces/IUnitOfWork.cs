@@ -10,9 +10,10 @@ namespace DLL.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Product> Products { get; }
+      IProductRepository Products { get; }
         ICartRepository Carts { get; }
         ApplicationUserManager UserManager { get; }
+        ICategoryRepository Categories { get; }
         IClientManager ClientManager { get; }
         ApplicationRoleManager RoleManager { get; }
         Task SaveAsync();

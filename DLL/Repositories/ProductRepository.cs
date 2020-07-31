@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DLL.Repositories
 {
-    class ProductRepository : IRepository<Product>
+    class ProductRepository : IProductRepository
     {
         private EFdbContext db;
 
@@ -21,12 +21,12 @@ namespace DLL.Repositories
 
         public IEnumerable<Product> GetAll()
         {
-            return db.Products;
+            return db.Products.Include(b => b.Category).ToList();
         }
 
         public Product Get(int id)
         {
-            return db.Products.Find(id);
+            return db.Products.Where(b => b.ProductId == id).Include(b => b.Category).FirstOrDefault();
         }
 
         public void Create(Product product)
@@ -39,9 +39,9 @@ namespace DLL.Repositories
             db.Entry(product).State = EntityState.Modified;
         }
 
-        public IEnumerable<Product> Find(Func<Product, Boolean> predicate)
+        public IEnumerable<Product> Find(string searchString)
         {
-            return db.Products.Where(predicate).ToList();
+            return db.Products.Where(p=> p.Name.Contains(searchString)).Include(b => b.Category).ToList();
         }
 
         public void Delete(int id)

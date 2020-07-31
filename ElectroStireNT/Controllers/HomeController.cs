@@ -18,6 +18,7 @@ namespace ElectroStireNT.Controllers
         private readonly ShoppingCartFactory shoppingCartFactory;
         IProductService productService;
         IOrderService orderService;
+
         public HomeController(IProductService serv, IOrderService oService, ShoppingCartFactory factory)
         {
             orderService = oService;
@@ -25,73 +26,57 @@ namespace ElectroStireNT.Controllers
             productService = serv;
         }
         
-        public ActionResult Index(int? id,string category, int page = 1 )
+        public ActionResult Index(int? id, string category, int? page, string searchName)
         {
-            int pageSize = 4;
-            IEnumerable<ProductDTO> productDtos = productService.GetProducts() ;
+            int pageSize = 6;
+            int pageNumber = (page ?? 1);
+            IEnumerable<ProductDTO> products;
+
+            ViewBag.category = category;
+            ViewBag.searchName = searchName;           
+
+            if (searchName == null)
+                products = productService.GetProducts();
+            else
+                products = productService.FindProducts(searchName);
+
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
-            ListViewModel model = new ListViewModel
-            {
-                Prods = products.Where(p =>category == null || p.Category == category)
-                    .OrderBy(product => product.ProductId).Skip((page - 1) * pageSize)
-                    .Take(pageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = category == null ?
-        products.Count() :
-       products.Where(p => p.Category == category).Count()
-                },
-                CurrentCategory = category
-            };
+            var productsViewModel = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(products);
+
             if (Request.IsAjaxRequest())
             {
                 var cart = shoppingCartFactory.GetCart(HttpContext);
-                var addedBook = productService.GetProduct(id.Value);
-                orderService.AddToCart(addedBook, cart.ShoppingCartId);
+                var addedProd = productService.GetProduct(id.Value);
+                orderService.AddToCart(addedProd, cart.ShoppingCartId);
 
 
-                return View(model);
+                return PartialView("Summary",productsViewModel.ToPagedList(pageNumber, pageSize));
             }
-            return View(model);
+            return View(productsViewModel.ToPagedList(pageNumber, pageSize));
         }
 
-        public async Task<ActionResult> AddToCart(int? id, string category, int page=1)
+        public async Task<ActionResult> AddToCart(int? id, int? page, string category)
         {
-           
+
             var cart = shoppingCartFactory.GetCart(HttpContext);
             var addedProd = productService.GetProduct(id.Value);
             int pageSize = 6;
-           // int pageNumber = (page ?? 1);            
+            int pageNumber = (page ?? 1);
+
             await orderService.AddToCart(addedProd, cart.ShoppingCartId);
 
-
-            IEnumerable<ProductDTO> productDtos = productService.GetProducts();
+            var products = productService.GetProducts();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
-            ListViewModel model = new ListViewModel
-            {
-                Prods = products.Where(p => category == null || p.Category == category)
-                    .OrderBy(product => product.ProductId).Skip((page - 1) * pageSize)
-                    .Take(pageSize),
-                PagingInfo = new PagingInfo
-                {
-                    CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = category == null ?
-        products.Count() :
-       products.Where(p => p.Category == category).Count()
-                },
-                CurrentCategory = category
-            };
+            var productsViewModel = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(products);
 
-
-            return View("Index",model);
+            return View("Index", productsViewModel.ToPagedList(pageNumber, pageSize));
         }
 
-
+        public ActionResult Autocomplete(string term)
+        {
+            var products = productService.FindProducts(term).Select(b => new { value = b.Name }).Distinct();
+            return Json(products, JsonRequestBehavior.AllowGet);
+        }
         protected override void Dispose(bool disposing)
         {
            productService.Dispose();
