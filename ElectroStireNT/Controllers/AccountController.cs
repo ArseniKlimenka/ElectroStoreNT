@@ -17,7 +17,7 @@ namespace ElectroStireNT.Controllers
     public class AccountController : Controller
     {
         // GET: Account
-        private IUserService UserService
+        private IUserService UserService            
         {
             get
             {

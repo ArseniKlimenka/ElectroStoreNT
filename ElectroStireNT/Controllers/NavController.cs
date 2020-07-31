@@ -12,22 +12,24 @@ namespace ElectroStireNT.Controllers
 {
     public class NavController : Controller
     {
-        IProductService productService;
-        public NavController(IProductService serv)
+        IProductService _productService;
+        ICategoryService _categoryService;
+        public NavController(IProductService productService,ICategoryService categoryService)
         {
-            productService = serv;
+            _productService = productService;
+            _categoryService = categoryService;
         }
         public ActionResult Menu(string category = null)
         {
-            ViewBag.SelectedCategory = category;
-            IEnumerable<ProductDTO> productDtos = productService.GetProducts();
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
-            var products = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(productDtos);
+            var categories = _categoryService.GetCategories();
+            MenuViewModel viewModel = new MenuViewModel
+            {              
+                Categories = categories.ToList()
+            };
+            ViewBag.SelectedCategegory = category;
 
-            IEnumerable<string> categories = products.Select(p => p.Category)
-                .Distinct()
-                .OrderBy(x => x);
-            return PartialView(categories);
+            return PartialView(viewModel);
+
         }
     }
 }

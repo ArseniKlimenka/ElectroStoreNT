@@ -14,7 +14,9 @@ namespace ElectroStireNT.Util
         public override void Load()
         {
             Bind<IOrderService>().To<OrderService>();
+            Bind<IUserService>().To<UserService>();
             Bind<IProductService>().To<ProductService>();
+            Bind<ICategoryService>().To<CategoryService>();
             Kernel.Unbind<ModelValidatorProvider>();
         }
     }

@@ -22,17 +22,20 @@
             </ul>
             @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
             {
-    <input class="form-control mr-sm-2" placeholder="Книга" data-autocomplete-source='@Url.Action("Autocomplete", "Home")' name="searchName" />
-                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Поиск</button>            }
+                <input class="form-control mr-sm-2" placeholder="Фильм" data-autocomplete-source='@Url.Action("Autocomplete", "Home")' name="searchName" />
+                <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Поиск</button>}
             @if (!User.Identity.IsAuthenticated)
             {
-    @Html.ActionLink("Войти", "Login", "Account", null, new { @class = "btn-outline-light btn ml-1" }) }
-                else
-                {
-    @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn-outline-light btn ml-1" })            }
+                @Html.ActionLink("Войти", "Login", "Account", null, new { @class = "btn-outline-light btn ml-1" })
+                @Html.ActionLink("Регистрация", "Register", "Account", null, new { @class = "btn-outline-light btn ml-1" })
+            }
+            else
+            {
+                @Html.ActionLink("Выйти", "Logout", "Account", null, new { @class = "btn-outline-light btn ml-1" })
+            }
             @if (User.IsInRole("admin"))
             {
-    @Html.ActionLink("Админ панель", "Main", "Product", null, new { @class = "btn btn-outline-light ml-1" })            }
+                @Html.ActionLink("Админ панель", "Main", "Product", null, new { @class = "btn btn-outline-light ml-1" })}
 
             <a class="btn btn-outline-light mx-1" href="@Url.Action("Index","Cart",  new { returnUrl = Request.Url.PathAndQuery })">
                 <i class="fas fa-shopping-cart mr-1"></i>Корзина
@@ -40,13 +43,14 @@
 
         </div>
     </nav>
-    <div class="row panel">
-        <div id="categories" class="col-xs-3">
-            @Html.Action("Menu", "Nav")
+    <section class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-sm-2">
+                @Html.Action("Menu", "Nav")
+            </div>
+            <div class="col-sm-10">@RenderBody()</div>
         </div>
-        <div class="col-xs-8">
-            @RenderBody()
-        </div>
-    </div>
+    </section>
+   
 </body>
 </html>

@@ -1,19 +1,33 @@
-﻿@model IEnumerable<string>
+﻿@model ElectroStireNT.Models.MenuViewModel
 
-@Html.ActionLink("Домой", "Index", "Home", null,
-    new { @class = "btn btn-block btn-default btn-lg" })
+@*<style>
 
-@foreach (var link in Model)
+    .default {
+        position: fixed;
+        top: 50%;
+        left: 5%;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>*@
+<div class="btn-group-vertical btn-group-lg">
+    @Html.ActionLink("Главная", "Index", "Home", null, new { @class = "btn btn-primary" })
+    
+            @foreach (var link in Model.Categories)
+            {
+@Html.RouteLink(link.CategoryName, new
 {
-    @Html.RouteLink(link, new
-    {
-        controller = "Home",
-        action = "Index",
-        category = link,
-        page = 1
-    }, new
-    {
-        @class = "btn btn-block btn-default btn-lg"
+             controller = "Home",
+             action = "Index",
+             category = link.CategoryName,
+}, new
+{
+    @class = "btn btn-block btn-default btn-lg"
             + (link == ViewBag.SelectedCategory ? " btn-primary" : "")
-    })
-}
+})            }
+        </div>
+
+
+<h4 class=" btn btn-success default hidden" id="success">Добавлено в корзину</h4>

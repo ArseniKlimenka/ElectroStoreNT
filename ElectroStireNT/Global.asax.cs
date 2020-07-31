@@ -18,9 +18,7 @@ namespace ElectroStireNT
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-         
+            RouteConfig.RegisterRoutes(RouteTable.Routes);                     
 
             ServiceModule serviceModule = new ServiceModule("EFdbContext");
             ProductModule orderModule = new ProductModule();

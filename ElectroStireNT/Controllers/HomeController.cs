@@ -36,7 +36,7 @@ namespace ElectroStireNT.Controllers
             ViewBag.searchName = searchName;           
 
             if (searchName == null)
-                products = productService.GetProducts();
+                products = productService.GetProducts(category);
             else
                 products = productService.FindProducts(searchName);
 

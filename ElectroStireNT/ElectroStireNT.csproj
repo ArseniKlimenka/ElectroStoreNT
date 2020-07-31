@@ -266,6 +266,7 @@
     <Compile Include="HtmlHelpers\PagingHelper.cs" />
     <Compile Include="Models\ListViewModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\PagingInfo.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
