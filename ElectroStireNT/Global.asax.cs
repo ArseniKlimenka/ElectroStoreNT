@@ -10,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Optimization;
 
 namespace ElectroStireNT
 {
@@ -18,7 +19,9 @@ namespace ElectroStireNT
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);                     
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+           // BundleConfig.RegisterBundles(BundleTable.Bundles);
+
 
             ServiceModule serviceModule = new ServiceModule("EFdbContext");
             ProductModule orderModule = new ProductModule();

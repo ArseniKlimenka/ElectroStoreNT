@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Common.DTO.ProductDTO>
+@Html.ActionLink("Добавить Фильм", "Create", null, new { @class = "btn btn-primary mb-2" })
+<table class="table table-hover">
+    <tbody>
+        @foreach (var p in Model)
+        {
+<tr>
+    <td>@p.Name</td>
+    <td>@p.Price руб</td>    
+    <td>@p.Category</td>
+    <td>
+        @Html.ActionLink("Изменить", "Edit", "Product", new { id = p.ProductId },
+                 new { @class = "viewDialog", data_dialog_title = "Редактирование модели" })
+    </td>
+    <td>
+        @Ajax.ActionLink("Удалить", "Delete", "Product",
+                  new { id = p.ProductId }, new AjaxOptions
+                  {
+                      HttpMethod = "POST",
+                      UpdateTargetId = "updateAdminPanel",
+                      Confirm = "Вы действительно хотите удалить этот объект?"
+                  })
+    </td>
+</tr>}
+    </tbody>
+</table>
+<script src="@Url.Content("~/Scripts/developerScripts/EditDialogScrip")></script>
