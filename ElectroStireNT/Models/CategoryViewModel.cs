@@ -9,7 +9,8 @@ namespace ElectroStireNT.Models
     public class CategoryViewModel
     {
         public int Id { get; set; }
-        [Required]
+       
+        [Required(ErrorMessage = "Введите название жанра")]
         public string CategoryName { get; set; }
     }
 }

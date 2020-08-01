@@ -2,58 +2,36 @@
 
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
+<h4>Добавление фильма</h4>
+@using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>CreateProductViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+   @Html.AntiForgeryToken()
+   @Html.HiddenFor(m => m.Id)
+   @Html.ValidationSummary(true)
+    <div class="form-group">
+        <label for="Name">Название</label>
+        @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(m=>m.Name)
     </div>
+    <div class="form-group">
+        <label for="Decription">Описание</label>
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = "5" })
+        @Html.ValidationMessageFor(m => m.Description)
+    </div>
+    <div class="form-group">
+        <label for="Price">Цена</label>
+        @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Price)
+    </div>    
+    <div class="form-group">
+        <label for="Category">Жанр</label>
+        @Html.DropDownListFor(m => m.CategoryId, Model.Categories as SelectList, new { @class = "form-control" })
+       
+    </div>
+    <button type="submit" class="btn btn-primary">Подтвердить</button>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<div>@Html.ActionLink("Вернутся к списку", "Main", "Product") </div>

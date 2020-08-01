@@ -25,20 +25,19 @@ namespace ElectroStireNT.Controllers.Admin
         }
 
 
-        public ActionResult GetAllGenres()
+        public ActionResult GetAllCategories()
         {
+           
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
-            var categories =
-                mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
+            var categories = mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
             return PartialView("ShowCategories", categories);
         }
         public ActionResult Delete(int id)
         {
             _categoryService.DeleteCategory(id);
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
-            var genres =
-                mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
-            return PartialView("ShowCategories", genres);
+            var categories =                mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
+            return PartialView("ShowCategories", categories);
         }
         public ActionResult Edit(int id)
         {
@@ -61,7 +60,7 @@ namespace ElectroStireNT.Controllers.Admin
                     .CreateMapper();
                 var category = mapper.Map<CategoryViewModel, CategoryDTO>(viewModel);
                 _categoryService.CreateGenre(category);
-                return RedirectToAction("Main", "Product");
+                return RedirectToAction("GetAllCategories");
             }
 
             return View(viewModel);

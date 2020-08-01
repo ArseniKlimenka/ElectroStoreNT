@@ -32,20 +32,18 @@ namespace ElectroStireNT.Controllers.Admin
             return View(products);
         }
 
-        public ActionResult GetAllBooks()
+        public ActionResult GetAllProducts()
         {
             var products = _productService.GetProducts();
-            return PartialView("ShowBooks", products);
+            return PartialView("ShowProducts", products);
         }
 
-
-        [HttpPost]
         public ActionResult Delete(int id)
         {
             var product = _productService.GetProduct(id);
             _productService.DeleteProduct(id);
             var products = _productService.GetProducts();
-            return PartialView("ShowProducts", products);
+            return PartialView("Main", products);
         }
 
         public ActionResult Edit(int id)

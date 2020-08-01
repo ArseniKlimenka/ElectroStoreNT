@@ -16,7 +16,7 @@ namespace DLL.Repositories
 
         public ProductRepository(EFdbContext context)
         {
-            this.db = context;
+            db = context;
         }
 
         public IEnumerable<Product> GetAll()

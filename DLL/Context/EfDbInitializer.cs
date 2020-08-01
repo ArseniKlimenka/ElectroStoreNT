@@ -12,11 +12,11 @@ namespace DLL.Context
     {
         protected override void Seed(EFdbContext context)
         {
-            context.Products.Add(new Product { ProductId = 17, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 233 });
-            context.Products.Add(new Product { ProductId = 18, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 27 });
-            context.Products.Add(new Product { ProductId = 19, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 233 });
-            context.Products.Add(new Product { ProductId = 20, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 73 });
-            context.Products.Add(new Product { ProductId = 21, Name = "Qas", Description = "Hui", CategoryId = 1, Price = 12 });
+            context.Products.Add(new Product { ProductId = 17, Name = "Hello", Description = "Hello", CategoryId = 1, Price = 233 });
+            context.Products.Add(new Product { ProductId = 18, Name = "Hello", Description = "Hello", CategoryId = 1, Price = 27 });
+            context.Products.Add(new Product { ProductId = 19, Name = "Hello", Description = "Hello", CategoryId = 1, Price = 233 });
+            context.Products.Add(new Product { ProductId = 20, Name = "Hello", Description = "Hello", CategoryId = 1, Price = 73 });
+            context.Products.Add(new Product { ProductId = 21, Name = "Hello", Description = "Hello", CategoryId = 1, Price = 12 });
 
             context.Categories.Add(new Category { Id = 1, CategoryName = "Классика" });
             context.Categories.Add(new Category { Id = 2, CategoryName = "Фентези" });

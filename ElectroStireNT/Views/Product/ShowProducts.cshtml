@@ -6,22 +6,23 @@
         {
 <tr>
     <td>@p.Name</td>
-    <td>@p.Price руб</td>    
+    <td>@p.Price руб</td>
     <td>@p.Category</td>
     <td>
-        @Html.ActionLink("Изменить", "Edit", "Product", new { id = p.ProductId },
-                 new { @class = "viewDialog", data_dialog_title = "Редактирование модели" })
+        @Html.ActionLink("Изменить", "Edit", new { id = p.ProductId },
+                      new { @class = "viewDialog", data_dialog_title = "Редактирование модели" })
     </td>
     <td>
         @Ajax.ActionLink("Удалить", "Delete", "Product",
-                  new { id = p.ProductId }, new AjaxOptions
-                  {
-                      HttpMethod = "POST",
-                      UpdateTargetId = "updateAdminPanel",
-                      Confirm = "Вы действительно хотите удалить этот объект?"
-                  })
+                       new { id = p.ProductId }, new AjaxOptions
+                       {
+                           HttpMethod = "POST",
+                           UpdateTargetId = "updateAdminPanel",
+                           Confirm = "Вы действительно хотите удалить этот объект?"
+                       })
     </td>
-</tr>}
+</tr>
+}
     </tbody>
 </table>
-<script src="@Url.Content("~/Scripts/developerScripts/EditDialogScrip")></script>
+<script src="@Url.Content("~/Scripts/developerScripts/EditDialogScript.js")"></script>

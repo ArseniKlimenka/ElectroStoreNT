@@ -354,6 +354,7 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
@@ -412,8 +413,11 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Main.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Product\ShowProducts.cshtml" />
+    <Content Include="Views\Category\ShowCategories.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -423,7 +427,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BLL\BLL.csproj">
