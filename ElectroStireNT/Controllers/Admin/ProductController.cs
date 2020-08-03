@@ -29,7 +29,7 @@ namespace ElectroStireNT.Controllers.Admin
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
             var products = _productService.GetProducts();
 
-            return View(products);
+            return View("Main",products);
         }
 
         public ActionResult GetAllProducts()

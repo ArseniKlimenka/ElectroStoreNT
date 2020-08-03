@@ -36,7 +36,7 @@ namespace ElectroStireNT.Controllers.Admin
         {
             _categoryService.DeleteCategory(id);
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CategoryDTO, CategoryViewModel>()).CreateMapper();
-            var categories =                mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
+            var categories =mapper.Map<IEnumerable<CategoryDTO>, IEnumerable<CategoryViewModel>>(_categoryService.GetCategories());
             return PartialView("ShowCategories", categories);
         }
         public ActionResult Edit(int id)
