@@ -6,6 +6,8 @@ using DLL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +31,7 @@ namespace BLL.Services
         //Start of ShoppingCart Logics
         public async Task AddToCart(ProductDTO cartItem, string Id)
         {
-            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
-            //var prod = mapper.Map<ProductDTO, Product>(Database.Products.Get(cartItem.ProductId));
+           
             Product product = new Product()
             {
                 ProductId = cartItem.ProductId,
@@ -38,8 +39,7 @@ namespace BLL.Services
                 Description = cartItem.Description,
                 Price = cartItem.Price
             };
-            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<BookDTO, Book>().ForMember(dt)
-            //Database.Carts.AddToCart(book);
+           
             await Database.Carts.AddToCart(product, Id);
             await Database.SaveAsync();
 
@@ -88,11 +88,7 @@ namespace BLL.Services
 
         // Orders logic
         public async Task CreateNewOrder(OrderDTO orderDTO, string CartId)
-        {
-            //if (IsAnyNullOrEmpty(orderDTO))
-            //{
-            //    throw new ValidationException("Все поля должны быть заполнены", "");
-            //}
+        {          
             var order = new Order
             {
                 OrderDate = orderDTO.OrderDate,
@@ -104,15 +100,47 @@ namespace BLL.Services
                 Phone = orderDTO.Phone,
                 Email = orderDTO.Email
             };
-            //try
-            //{
+
+            StringBuilder body = new StringBuilder()
+               .AppendLine("Новый заказ обработан")
+               .AppendLine("---")
+               .AppendLine("Товары:");
+            List<CartItem> cart = new List<CartItem>();
+            var a = await Database.Carts.GetAll(CartId);
+            cart = await Database.Carts.GetAll(CartId);
+            foreach (var line in cart)
+            {
+                var subtotal = GetTotal(CartId);
+                body.AppendFormat("{0} x {1} (итого: {2:c}",
+                    line.Count, line.Product.Name, subtotal);
+            }
+
+            body.AppendFormat("Общая стоимость: {0:c}", cart.Count())
+                .AppendLine("---")
+                .AppendLine("Доставка:")
+                .AppendLine(order.FirstName)
+                .AppendLine(order.LastName)
+                .AppendLine(order.City)
+                .AppendLine(order.Address)
+                .AppendLine("---");
+
+            MailMessage mailMessage = new MailMessage("Arseni.Klimenka@gmail.com", order.Email);
+            mailMessage.Subject = "Новый заказ отправлен!";     // Тема
+            mailMessage.Body = body.ToString();
+            using (System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient("smtp.gmail.com")) //используем сервера Google
+            {
+
+                client.Credentials = new NetworkCredential("Arseni.Klimenka@gmail.com", "PanShcadun2904"); //логин-пароль от аккаунта
+                client.Port = 587; //порт 587 либо 465
+                client.EnableSsl = true; //SSL обязательно
+                client.Send(mailMessage);
+            }
+
+
             await Database.Carts.CreateOrder(order, CartId);
             await Database.SaveAsync();
-            //}
-            //catch (Exception)
-            //{
-            //    throw new ValidationException("Email указан некорректно", "Email");
-            //}
+
+            
 
         }
         private bool IsAnyNullOrEmpty(OrderDTO order)
