@@ -29,8 +29,8 @@ namespace BLL.Services
         //Start of ShoppingCart Logics
         public async Task AddToCart(ProductDTO cartItem, string Id)
         {
-            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<BookDTO, Book>()).CreateMapper();
-            //var book = mapper.Map<BookDTO, Book>(Database.Books.Get(cartItem.Id));
+            //var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, Product>()).CreateMapper();
+            //var prod = mapper.Map<ProductDTO, Product>(Database.Products.Get(cartItem.ProductId));
             Product product = new Product()
             {
                 ProductId = cartItem.ProductId,
@@ -47,8 +47,14 @@ namespace BLL.Services
 
         public async Task<List<CartItemDTO>> GetAllCartItems(string Id)
         {
-            var mapper = new MapperConfiguration(cfg => cfg.CreateMap<CartItem, CartItemDTO>()).CreateMapper();
 
+            var config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<CartItem, CartItemDTO>();
+                cfg.CreateMap<Product, ProductDTO>();
+            });
+            config.AssertConfigurationIsValid();
+            var mapper = config.CreateMapper();
             return mapper.Map<IEnumerable<CartItem>, List<CartItemDTO>>(await Database.Carts.GetAll(Id));
         }
       

@@ -1,9 +1,10 @@
 ﻿@model ElectroStireNT.Models.ShoppingCartViewModel
+
 <table class="table">
     <thead>
         <tr>
             <th>Кол-во</th>
-            <th>Фильм</th>
+            <th>Книга</th>
             <th>Цена</th>
             <th>Общая цена</th>
         </tr>
@@ -17,15 +18,14 @@
     <td>@line.Product.Price.ToString("# руб")</td>
     <td>@((line.Product.Price * line.Count).ToString("# руб"))</td>
     <td>
-        @Ajax.ActionLink("Удалить", "RemoveFromCart", "ShoppingCart",
-                 new { id = line.CartItemId, returnUrl = Model.returnUrl }, new AjaxOptions
-                 {
-                     HttpMethod = "GET",
-                     UpdateTargetId = "updateCart"
-                 }, new { @class = "btn btn-primary" })
+        @Ajax.ActionLink("Удалить", "RemoveFromCart", "Cart",
+            new { id = line.CartItemId, returnUrl = Model.returnUrl }, new AjaxOptions
+            {
+                HttpMethod = "GET",
+                UpdateTargetId = "updateCart"
+            }, new { @class = "btn btn-primary" })
     </td>
-</tr>
-}
+</tr>}
     </tbody>
     <tfoot>
         <tr>
@@ -36,4 +36,3 @@
         </tr>
     </tfoot>
 </table>
-

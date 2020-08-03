@@ -45,7 +45,7 @@ namespace ElectroStireNT.Controllers
                 CartItems = await orderService.GetAllCartItems(cartId),
                 CartTotal = await orderService.GetTotal(cartId)
             };
-            return PartialView("ShowCart", viewModel);
+            return PartialView("Index", viewModel);
 
         }
         public async Task<ActionResult> EmptyCart()
@@ -62,7 +62,7 @@ namespace ElectroStireNT.Controllers
                 CartItems = await orderService.GetAllCartItems(cartId),
                 CartTotal = await orderService.GetTotal(cartId)
             };
-            return PartialView("ShowCart", viewModel);
+            return PartialView("Index", viewModel);
         }
 
     }
