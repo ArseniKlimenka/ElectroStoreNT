@@ -105,18 +105,19 @@ namespace BLL.Services
                .AppendLine("Новый заказ обработан")
                .AppendLine("---")
                .AppendLine("Товары:");
-            List<CartItem> cart = new List<CartItem>();
-            var a = await Database.Carts.GetAll(CartId);
+            List<CartItem> cart = new List<CartItem>();           
             cart = await Database.Carts.GetAll(CartId);
+           decimal subtotal = 0;
             foreach (var line in cart)
             {
-                var subtotal = GetTotal(CartId);
-                body.AppendFormat("{0} x {1} (итого: {2:c}",
-                    line.Count, line.Product.Name, subtotal);
+                body.AppendFormat("{0} x {1} (итого: {2} руб.)",
+                line.Count, line.Product.Name, line.Product.Price * line.Count)
+                .AppendLine("");
+                subtotal += line.Product.Price * line.Count;
             }
 
-            body.AppendFormat("Общая стоимость: {0:c}", cart.Count())
-                .AppendLine("---")
+            body.AppendFormat("Общая стоимость: {0}", subtotal )
+                .AppendLine("")
                 .AppendLine("Доставка:")
                 .AppendLine(order.FirstName)
                 .AppendLine(order.LastName)

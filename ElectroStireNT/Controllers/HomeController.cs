@@ -68,7 +68,7 @@ namespace ElectroStireNT.Controllers
             var products = productService.GetProducts();
             var mapper = new MapperConfiguration(cfg => cfg.CreateMap<ProductDTO, ProductViewModel>()).CreateMapper();
             var productsViewModel = mapper.Map<IEnumerable<ProductDTO>, List<ProductViewModel>>(products);
-
+           
             return View("Index", productsViewModel.ToPagedList(pageNumber, pageSize));
         }
 

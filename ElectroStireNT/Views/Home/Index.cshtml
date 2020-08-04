@@ -1,15 +1,14 @@
 ﻿@model PagedList.IPagedList<ElectroStireNT.Models.ProductViewModel>
-    @using PagedList.Mvc;
+@using PagedList.Mvc;
 
-    <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-    @{
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="updateProducts">
+    @Html.Partial("Summary")
+</div>
 
-    <div id="updateProducts">
-        @Html.Partial("Summary")
-    </div>
-   
-    <div class="float-right">
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = ViewBag.category }))
-    </div>
+<div class="float-right">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, category = ViewBag.category }))
+</div>

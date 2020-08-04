@@ -32,9 +32,7 @@ namespace ElectroStireNT.Controllers
             };           
        
             return View(viewModel);
-        }
-
-
+        }      
 
         public async Task<ActionResult> RemoveFromCart(int id)
         {
@@ -48,6 +46,7 @@ namespace ElectroStireNT.Controllers
             return PartialView("Index", viewModel);
 
         }
+       
         public async Task<ActionResult> EmptyCart()
         {
             var cartId = shoppingCartFactory.GetCart(this.HttpContext).ShoppingCartId;
